@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyDateTimePicker</string>
+
+
+    <string name="show_dialog">弹出时间选择框</string>
+
+
+    <string name="datetimepicker_cancel">取消</string>
+    <string name="datetimepicker_ok">确定</string>
+</resources>
