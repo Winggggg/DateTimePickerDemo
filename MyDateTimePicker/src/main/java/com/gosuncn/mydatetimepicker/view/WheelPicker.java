@@ -308,12 +308,13 @@ public class WheelPicker<T> extends View {
 		mTextSize = a.getDimensionPixelSize(R.styleable.WheelPicker_itemTextSize,
 				getResources().getDimensionPixelSize(R.dimen.WheelItemTextSize));
 		mTextColor = a.getColor(R.styleable.WheelPicker_itemTextColor,
-				Color.BLACK);
+				Color.GRAY);
 		mIsTextGradual = a.getBoolean(R.styleable.WheelPicker_textGradual, true);
 		mIsCyclic = a.getBoolean(R.styleable.WheelPicker_wheelCyclic, false);
 		mHalfVisibleItemCount = a.getInteger(R.styleable.WheelPicker_halfVisibleItemCount, 2);
 		mItemMaximumWidthText = a.getString(R.styleable.WheelPicker_itemMaximumWidthText);
-		mSelectedItemTextColor = a.getColor(R.styleable.WheelPicker_selectedTextColor, Color.parseColor("#33aaff"));
+		mSelectedItemTextColor = a.getColor(R.styleable.WheelPicker_selectedTextColor,
+				getResources().getColor(R.color.com_ycuwq_wheelpicker_selectedTextColor));
         mSelectedItemTextSize = a.getDimensionPixelSize(R.styleable.WheelPicker_selectedTextSize,
                 getResources().getDimensionPixelSize(R.dimen.WheelSelectedItemTextSize));
         mCurrentPosition = a.getInteger(R.styleable.WheelPicker_currentItemPosition, 0);

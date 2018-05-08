@@ -55,12 +55,12 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
                 getResources().getDimensionPixelSize(R.dimen.WheelItemTextSize));
 
         int textColor = a.getColor(R.styleable.DateTimePicker_itemTextColor,
-                Color.BLACK);
+                Color.GRAY);
         boolean isTextGradual = a.getBoolean(R.styleable.DateTimePicker_textGradual, true);
 
         boolean isCyclic = a.getBoolean(R.styleable.DateTimePicker_wheelCyclic, false);
 
-        int halfVisibleItemCount = a.getInteger(R.styleable.DateTimePicker_halfVisibleItemCount, 2);
+        int halfVisibleItemCount = a.getInteger(R.styleable.DateTimePicker_halfVisibleItemCount, 3);
 
         int selectedItemTextColor = a.getColor(R.styleable.DateTimePicker_selectedTextColor,
                 getResources().getColor(R.color.com_ycuwq_datepicker_selectedTextColor));
