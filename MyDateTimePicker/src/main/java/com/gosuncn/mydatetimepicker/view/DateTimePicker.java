@@ -8,22 +8,21 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.gosuncn.mydatetimepicker.R;
-
-import java.util.Calendar;
 
 /**
  * Created by weiye on 2018/5/6 0006.
  * 自定义时间选择器
  */
 
-public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicker.OnMonthDayAndWeekSelectedListener,
+public class DateTimePicker extends RelativeLayout implements YearPicker.OnYearSelectedListener,MonthDayAndWeekPicker.OnMonthDayAndWeekSelectedListener,
         HourPicker.OnHourSelectedListener,MinutePicker.OnMinuteSelectedListener,SecondPicker.OnSecondSelectedListener{
 
 
     private static  final String TAG=DateTimePicker.class.getSimpleName();
+    private YearPicker mYearPicker;
     private MonthDayAndWeekPicker mMonthDayAndWeekPicker;
     private HourPicker mHourPicker;
     private MinutePicker mMinutePicker;
@@ -50,17 +49,18 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
 
     private void initAttr(Context context, AttributeSet attrs) {
         if (attrs==null){return;}
-        TypedArray a=context.obtainStyledAttributes(R.styleable.DateTimePicker);
-        int textsize=a.getDimensionPixelSize(R.styleable.DateTimePicker_itemTextSize,
+        TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.DateTimePicker);
+        int textSize=a.getDimensionPixelSize(R.styleable.DateTimePicker_itemTextSize,
                 getResources().getDimensionPixelSize(R.dimen.WheelItemTextSize));
 
+        boolean isVertical=a.getBoolean(R.styleable.DateTimePicker_vertical,true);
         int textColor = a.getColor(R.styleable.DateTimePicker_itemTextColor,
                 Color.GRAY);
         boolean isTextGradual = a.getBoolean(R.styleable.DateTimePicker_textGradual, true);
 
         boolean isCyclic = a.getBoolean(R.styleable.DateTimePicker_wheelCyclic, false);
 
-        int halfVisibleItemCount = a.getInteger(R.styleable.DateTimePicker_halfVisibleItemCount, 3);
+        int halfVisibleItemCount = a.getInteger(R.styleable.DateTimePicker_halfVisibleItemCount, 2);
 
         int selectedItemTextColor = a.getColor(R.styleable.DateTimePicker_selectedTextColor,
                 getResources().getColor(R.color.com_ycuwq_datepicker_selectedTextColor));
@@ -86,7 +86,8 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
                 getResources().getColor(R.color.com_ycuwq_datepicker_divider));
         a.recycle();
 
-        setTextSize(textsize);
+        setmIsVertical(isVertical);
+        setTextSize(textSize);
         setTextColor(textColor);
         setTextGradual(isTextGradual);
         setCyclic(isCyclic);
@@ -103,12 +104,16 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
     }
 
 
+
+
     private void initChild() {
+        mYearPicker=findViewById(R.id.yearPicker_layout_date);
         mMonthDayAndWeekPicker=findViewById(R.id.monthDayAndWeekPicker_layout_date);
         mHourPicker=findViewById(R.id.hourPicker_layout_date);
         mMinutePicker=findViewById(R.id.minutePicker_layout_date);
         mSecondPicker=findViewById(R.id.secondPicker_layout_date);
 
+        mYearPicker.setOnYearSelectedListener(this);
         mMonthDayAndWeekPicker.setmOnMonthDayAndWeekSelectedListener(this);
         mHourPicker.setOnHourSelectedListener(this);
         mMinutePicker.setOnMinuteSelectedListener(this);
@@ -188,8 +193,16 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
         onDateSelected();
     }
 
+
+
+
     @Override
     public void onMonthDayAndWeekSelected(String MonthDayAndWeek) {
+        onDateSelected();
+    }
+
+    @Override
+    public void onYearSelected(String year) {
         onDateSelected();
     }
 
@@ -245,7 +258,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
     }
 
     public int getYear() {
-        return Calendar.getInstance().get(Calendar.YEAR);
+        return Integer.parseInt(mYearPicker.getSelectedYear().substring(0,4));
     }
 
 
@@ -321,11 +334,24 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
 
 
     /**
+     * 设置时间滚动选择器方向
+     * @param isVertical
+     */
+    private void setmIsVertical(boolean isVertical) {
+//        mYearPicker.setmIsVertical(isVertical);
+        mMonthDayAndWeekPicker.setmIsVertical(isVertical);
+        mHourPicker.setmIsVertical(isVertical);
+        mMinutePicker.setmIsVertical(isVertical);
+        mSecondPicker.setmIsVertical(isVertical);
+    }
+
+    /**
      * 一般列表的文本颜色
      *
      * @param textColor 文本颜色
      */
     public void setTextColor(@ColorInt int textColor) {
+        mYearPicker.setTextColor(textColor);
         mMonthDayAndWeekPicker.setTextColor(textColor);
         mHourPicker.setTextColor(textColor);
         mMinutePicker.setTextColor(textColor);
@@ -338,6 +364,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param textSize 文字大小
      */
     public void setTextSize(int textSize) {
+        mYearPicker.setTextSize(textSize);
         mMonthDayAndWeekPicker.setTextSize(textSize);
         mHourPicker.setTextSize(textSize);
         mMinutePicker.setTextSize(textSize);
@@ -350,6 +377,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param selectedItemTextColor 文本颜色
      */
     public void setSelectedItemTextColor(@ColorInt int selectedItemTextColor) {
+        mYearPicker.setSelectedItemTextColor(selectedItemTextColor);
         mMonthDayAndWeekPicker.setSelectedItemTextColor(selectedItemTextColor);
         mHourPicker.setSelectedItemTextColor(selectedItemTextColor);
         mMinutePicker.setSelectedItemTextColor(selectedItemTextColor);
@@ -362,6 +390,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param selectedItemTextSize 文字大小
      */
     public void setSelectedItemTextSize(int selectedItemTextSize) {
+        mYearPicker.setSelectedItemTextSize(selectedItemTextSize);
         mMonthDayAndWeekPicker.setSelectedItemTextSize(selectedItemTextSize);
         mHourPicker.setSelectedItemTextSize(selectedItemTextSize);
         mMinutePicker.setSelectedItemTextSize(selectedItemTextSize);
@@ -376,6 +405,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param halfVisibleItemCount 总数量的一半
      */
     public void setHalfVisibleItemCount(int halfVisibleItemCount) {
+//        mYearPicker.setHalfVisibleItemCount(halfVisibleItemCount);
         mMonthDayAndWeekPicker.setHalfVisibleItemCount(halfVisibleItemCount);
         mHourPicker.setHalfVisibleItemCount(halfVisibleItemCount);
         mMinutePicker.setHalfVisibleItemCount(halfVisibleItemCount);
@@ -388,6 +418,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param itemWidthSpace the item width space
      */
     public void setItemWidthSpace(int itemWidthSpace) {
+        mYearPicker.setItemWidthSpace(itemWidthSpace);
         mMonthDayAndWeekPicker.setItemWidthSpace(itemWidthSpace);
         mHourPicker.setItemWidthSpace(itemWidthSpace);
         mMinutePicker.setItemWidthSpace(itemWidthSpace);
@@ -400,6 +431,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param itemHeightSpace 间隔值
      */
     public void setItemHeightSpace(int itemHeightSpace) {
+        mYearPicker.setItemHeightSpace(itemHeightSpace);
         mMonthDayAndWeekPicker.setItemHeightSpace(itemHeightSpace);
         mHourPicker.setItemHeightSpace(itemHeightSpace);
         mMinutePicker.setItemHeightSpace(itemHeightSpace);
@@ -413,6 +445,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param zoomInSelectedItem the zoom in center item
      */
     public void setZoomInSelectedItem(boolean zoomInSelectedItem) {
+        mYearPicker.setZoomInSelectedItem(zoomInSelectedItem);
         mMonthDayAndWeekPicker.setZoomInSelectedItem(zoomInSelectedItem);
         mHourPicker.setZoomInSelectedItem(zoomInSelectedItem);
         mMinutePicker.setZoomInSelectedItem(zoomInSelectedItem);
@@ -425,6 +458,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param cyclic 上下边界是否相邻
      */
     public void setCyclic(boolean cyclic) {
+        mYearPicker.setCyclic(cyclic);
         mMonthDayAndWeekPicker.setCyclic(cyclic);
         mHourPicker.setCyclic(cyclic);
         mMinutePicker.setCyclic(cyclic);
@@ -437,6 +471,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param textGradual 是否渐变
      */
     public void setTextGradual(boolean textGradual) {
+        mYearPicker.setTextGradual(textGradual);
         mMonthDayAndWeekPicker.setTextGradual(textGradual);
         mHourPicker.setTextGradual(textGradual);
         mMinutePicker.setTextGradual(textGradual);
@@ -450,6 +485,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param showCurtain 是否有幕布
      */
     public void setShowCurtain(boolean showCurtain) {
+        mYearPicker.setShowCurtain(showCurtain);
         mMonthDayAndWeekPicker.setShowCurtain(showCurtain);
         mHourPicker.setShowCurtain(showCurtain);
         mMinutePicker.setShowCurtain(showCurtain);
@@ -462,6 +498,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param curtainColor 幕布颜色
      */
     public void setCurtainColor(@ColorInt int curtainColor) {
+        mYearPicker.setCurtainColor(curtainColor);
         mMonthDayAndWeekPicker.setCurtainColor(curtainColor);
         mHourPicker.setCurtainColor(curtainColor);
         mMinutePicker.setCurtainColor(curtainColor);
@@ -474,6 +511,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param showCurtainBorder 是否有幕布边框
      */
     public void setShowCurtainBorder(boolean showCurtainBorder) {
+        mYearPicker.setShowCurtainBorder(showCurtainBorder);
         mMonthDayAndWeekPicker.setShowCurtainBorder(showCurtainBorder);
         mHourPicker.setShowCurtainBorder(showCurtainBorder);
         mMinutePicker.setShowCurtainBorder(showCurtainBorder);
@@ -486,6 +524,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param curtainBorderColor 幕布边框颜色
      */
     public void setCurtainBorderColor(@ColorInt int curtainBorderColor) {
+        mYearPicker.setCurtainBorderColor(curtainBorderColor);
         mMonthDayAndWeekPicker.setCurtainBorderColor(curtainBorderColor);
         mHourPicker.setCurtainBorderColor(curtainBorderColor);
         mMinutePicker.setCurtainBorderColor(curtainBorderColor);
@@ -501,6 +540,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param secondText   秒指示器文本
      */
     public void setIndicatorText(String monthDayAndWeekText, String hourText, String minuteText,String secondText) {
+        mYearPicker.setIndicatorText(monthDayAndWeekText);
         mMonthDayAndWeekPicker.setIndicatorText(monthDayAndWeekText);
         mHourPicker.setIndicatorText(hourText);
         mMinutePicker.setIndicatorText(minuteText);
@@ -513,6 +553,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param textColor 文本颜色
      */
     public void setIndicatorTextColor(@ColorInt int textColor) {
+        mYearPicker.setIndicatorTextColor(textColor);
         mMonthDayAndWeekPicker.setIndicatorTextColor(textColor);
         mHourPicker.setIndicatorTextColor(textColor);
         mMinutePicker.setIndicatorTextColor(textColor);
@@ -525,6 +566,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
      * @param textSize 文本大小
      */
     public void setIndicatorTextSize(int textSize) {
+        mYearPicker.setTextSize(textSize);
         mMonthDayAndWeekPicker.setTextSize(textSize);
         mHourPicker.setTextSize(textSize);
         mMinutePicker.setTextSize(textSize);
@@ -539,6 +581,7 @@ public class DateTimePicker extends LinearLayout implements MonthDayAndWeekPicke
     public void setOnDateSelectedListener(OnDateSelectedListener onDateSelectedListener) {
         mOnDateSelectedListener = onDateSelectedListener;
     }
+
 
     /**
      * The interface On date selected listener.

@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="horizontal"
-              android:background="#f7f7f7"
+                android:background="#f7f7f7"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <com.gosuncn.mydatetimepicker.view.MonthDayAndWeekPicker
-        android:id="@+id/monthDayAndWeekPicker_layout_date"
-        app:halfVisibleItemCount="2"
-        android:layout_weight="3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-    <com.gosuncn.mydatetimepicker.view.HourPicker
-        android:id="@+id/hourPicker_layout_date"
-        app:halfVisibleItemCount="2"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-    <com.gosuncn.mydatetimepicker.view.MinutePicker
-        android:id="@+id/minutePicker_layout_date"
-        app:halfVisibleItemCount="2"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-    <com.gosuncn.mydatetimepicker.view.SecondPicker
-        android:id="@+id/secondPicker_layout_date"
-        app:halfVisibleItemCount="2"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+              android:layout_height="wrap_content">
 
-</LinearLayout>
+    <com.gosuncn.mydatetimepicker.view.YearPicker
+            android:id="@+id/yearPicker_layout_date"
+            app:halfVisibleItemCount="0"
+            app:vertical="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/yearPicker_layout_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.gosuncn.mydatetimepicker.view.MonthDayAndWeekPicker
+            android:id="@+id/monthDayAndWeekPicker_layout_date"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <com.gosuncn.mydatetimepicker.view.HourPicker
+            android:id="@+id/hourPicker_layout_date"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <com.gosuncn.mydatetimepicker.view.MinutePicker
+            android:id="@+id/minutePicker_layout_date"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <com.gosuncn.mydatetimepicker.view.SecondPicker
+            android:id="@+id/secondPicker_layout_date"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

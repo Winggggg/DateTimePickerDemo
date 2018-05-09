@@ -4,11 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-
     <color name="com_ycuwq_wheelpicker_selectedTextColor">#000000</color>
     <!--<color name="com_ycuwq_datepicker_selectedTextColor">#33aaff</color>-->
     <color name="com_ycuwq_datepicker_selectedTextColor">#000000</color>
     <!--<color name="com_ycuwq_datepicker_divider">#cccccc</color>-->
-    <color name="com_ycuwq_datepicker_divider">#ffffff</color>
+    <color name="com_ycuwq_datepicker_divider">#f7f7f7</color>
 
 </resources>

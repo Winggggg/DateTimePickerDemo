@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="vertical" format="boolean"/>
     <attr name="halfVisibleItemCount" format="integer"/>
     <attr name="itemTextSize" format="dimension"/>
     <attr name="itemMaximumWidthText" format="string"/>
@@ -20,6 +21,7 @@
     <attr name="indicatorTextSize" format="dimension"/>
     <attr name="indicatorTextColor" format="color"/>
     <declare-styleable name="WheelPicker">
+        <attr name="vertical"/>
         <attr name="halfVisibleItemCount"/>
         <attr name="itemTextSize"/>
         <attr name="itemMaximumWidthText"/>
@@ -67,6 +69,7 @@
     </declare-styleable>
 
     <declare-styleable name="HourAndMinutePicker">
+        <attr name="vertical"/>
         <attr name="halfVisibleItemCount"/>
         <attr name="itemTextSize"/>
         <attr name="itemTextColor"/>
@@ -84,6 +87,7 @@
     </declare-styleable>
 
     <declare-styleable name="DateTimePicker">
+        <attr name="vertical"/>
         <attr name="halfVisibleItemCount"/>
         <attr name="itemTextSize"/>
         <attr name="itemTextColor"/>

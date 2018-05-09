@@ -72,6 +72,10 @@ public class DateTimeDialogFragMent extends DialogFragment {
 
     private void initChildView() {
         mDateTimePicker.setCyclic(true);
+//        mDateTimePicker.setHalfVisibleItemCount(2);
+//        mDateTimePicker.setShowCurtain(true);
+//        mDateTimePicker.setShowCurtainBorder(t);
+//        mDateTimePicker.setSelectedItemTextColor(Color.RED);
     }
 
 
